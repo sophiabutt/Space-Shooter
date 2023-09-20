@@ -17,10 +17,10 @@ position = Vector2(900, 600)
 
 [node name="Effects" type="Node2D" parent="."]
 
-[node name="Player Container" type="Node2D" parent="."]
+[node name="Player_Container" type="Node2D" parent="."]
 script = ExtResource("2_7sgi3")
 
-[node name="Player" parent="Player Container" instance=ExtResource("1_v80ul")]
+[node name="Player" parent="Player_Container" instance=ExtResource("1_v80ul")]
 position = Vector2(576, 324)
 
 [node name="Enemy Container" type="Node2D" parent="."]

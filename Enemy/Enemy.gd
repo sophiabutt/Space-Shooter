@@ -26,7 +26,7 @@ func _on_timer_timeout():
 	if Player != null and Effects != null:
 		var bullet = Bullet.instantiate()
 		var d = global_position.angle_to_point(Player.global_position) + PI/2
-		bullet.rotaiton = d
+		bullet.rotation = d
 		bullet.global_position = global_position + Vector2(0,-40).rotated(d)
 		Effects.add_child(bullet)
 
