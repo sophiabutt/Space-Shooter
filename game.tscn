@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dselu521i3t0e"]
+[gd_scene load_steps=9 format=3 uid="uid://dselu521i3t0e"]
 
 [ext_resource type="PackedScene" uid="uid://bjpshgn4rirbk" path="res://Player/player.tscn" id="1_v80ul"]
 [ext_resource type="Script" path="res://Player/Player Container.gd" id="2_7sgi3"]
 [ext_resource type="PackedScene" uid="uid://v8evhlevkikf" path="res://Asteroid/asteroid.tscn" id="2_72sty"]
 [ext_resource type="PackedScene" uid="uid://cypb2d1rk8ls3" path="res://Enemy/enemy.tscn" id="3_syuwd"]
+[ext_resource type="Script" path="res://UI/HUD.gd" id="5_072uq"]
+[ext_resource type="FontFile" uid="uid://b3yd1l50w7igc" path="res://Assets/Hyperspace Bold.otf" id="5_ut3ga"]
+[ext_resource type="Script" path="res://UI/Menu.gd" id="7_47g5f"]
+[ext_resource type="FontFile" uid="uid://ci7gv54cgyuus" path="res://Assets/Hyperspace.otf" id="8_vlqhq"]
 
 [node name="Game" type="Node2D"]
 
@@ -23,7 +27,126 @@ script = ExtResource("2_7sgi3")
 [node name="Player" parent="Player_Container" instance=ExtResource("1_v80ul")]
 position = Vector2(576, 324)
 
-[node name="Enemy Container" type="Node2D" parent="."]
+[node name="Enemy_Container" type="Node2D" parent="."]
 
-[node name="Enemy" parent="Enemy Container" instance=ExtResource("3_syuwd")]
+[node name="Enemy" parent="Enemy_Container" instance=ExtResource("3_syuwd")]
 position = Vector2(400, 100)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_072uq")
+
+[node name="Score" type="Label" parent="UI/HUD"]
+layout_mode = 1
+offset_left = 10.0
+offset_right = 210.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("5_ut3ga")
+theme_override_font_sizes/font_size = 20
+text = "Score:"
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -210.0
+offset_right = -10.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("5_ut3ga")
+theme_override_font_sizes/font_size = 20
+text = "Time:"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Indicator_Container" type="Control" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Timer" type="Timer" parent="UI/HUD"]
+autostart = true
+
+[node name="Menu" type="Control" parent="UI"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_47g5f")
+
+[node name="ColorRect" type="ColorRect" parent="UI/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="Label" type="Label" parent="UI/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -248.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_vlqhq")
+theme_override_font_sizes/font_size = 60
+text = "Pause Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Restart" type="Button" parent="UI/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_ut3ga")
+theme_override_font_sizes/font_size = 20
+text = "Restart Game"
+
+[node name="Quit" type="Button" parent="UI/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 40.0
+offset_right = 100.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_ut3ga")
+theme_override_font_sizes/font_size = 20
+text = "Quit"
+
+[connection signal="timeout" from="UI/HUD/Timer" to="UI/HUD" method="_on_timer_timeout"]
+[connection signal="pressed" from="UI/Menu/Restart" to="UI/Menu" method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Menu/Quit" to="UI/Menu" method="_on_quit_pressed"]
