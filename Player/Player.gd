@@ -22,7 +22,7 @@ func get_input():
 		rotation += rotate_speed
 	return to_return.rotated(rotation) 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	velocity += get_input()*speed
 	velocity = velocity.normalized() * clamp(velocity.length(), 0, max_speed)
 
@@ -33,7 +33,7 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	if Input.is_action_just_pressed("Shoot"):
-		var Effects = get_node_or_null("/root/Game/Effects")
+		Effects = get_node_or_null("/root/Game/Effects")
 		if Effects != null:
 			var bullet = Bullet.instantiate()
 			bullet.rotation = rotation
